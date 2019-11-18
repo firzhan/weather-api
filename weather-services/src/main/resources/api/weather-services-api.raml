@@ -1,0 +1,100 @@
+#%RAML 1.0
+title: Weather API
+baseUri: http://localhost:8081/api/weather/{version}
+version: v1
+/city:
+    get:
+      description: Retrieve the weather of a particular city by its name
+      displayName: Country And City name
+      queryParameters: 
+        city: 
+          type: string
+          required: true
+        country: 
+          type: string
+          required: true  
+      
+      responses:
+          400:
+            body:
+              application/json:
+                example: 
+                  {"message": "City name is mandatory"}
+          200:
+            body:
+              application/json:
+                example: 
+                  {
+                    "location": "Melbourne",
+                    "time": "11 AM",
+                    "wind": "15 km per hour",
+                    "visibility": "10 km",
+                    "sky-conditions": "sunny",
+                    "temperature": "18",
+                    "dew": "2 C",
+                    "humidity": "35",
+                    "status": "Normal"
+                  }
+          404:
+            body: 
+              application/json: 
+                example: |
+                  {
+                    "error" : {
+                      "code" : "404",
+                      "message" : "No resource found"
+                    }
+                  }
+/cities:
+  get:
+    responses:
+      400:
+        body:
+          application/json:
+            example: |
+               {"message": "Country name is mandatory"}
+  /{country}:
+    description: Retrieve the cities of a country
+    displayName: Country Name
+    uriParameters: 
+        country: 
+          type: string
+          required: true
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: 
+                [
+                  {
+                    "Country": "Australia",
+                    "City": "Archerfield Aerodrome"
+                  },
+                  {
+                    "Country": "Australia",
+                    "City": "Amberley Aerodrome"
+                  },
+                  {
+                    "Country": "Australia",
+                    "City": "Alice Springs Aerodrome"
+                  },
+                  {
+                    "Country": "Australia",
+                    "City": "Brisbane Airport M. O"
+                  },
+                  {
+                    "Country": "Australia",
+                    "City": "Coolangatta Airport Aws"
+                  }
+                ]
+        404:
+          body: 
+            application/json: 
+              example: |
+                {
+                  "error" : {
+                    "code" : "404",
+                    "message" : "No resources found"
+                  }
+                }

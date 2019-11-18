@@ -1,0 +1,11 @@
+{
+	"location" : "Melbourne",
+	"time" :  "11 AM",
+	"wind" : "15 km per hour",
+	"visibility" : "10 km",
+	"sky-conditions" : "sunny",
+	"temperature" : 18,
+	"dew" : "2 C",
+	"humidity" : 35,
+	"status" : "normal"
+}

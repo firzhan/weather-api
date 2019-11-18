@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="citiesResponseXML" format="xml">
+      <types:example format="xml" element="NewDataSet" location="examples/response.xml"/>
+    </types:type>
+    <types:type name="weather_incoming_xml" format="xml">
+      <types:example format="xml" element="NewDataSet" location="examples/response_weather.xml"/>
+    </types:type>
+    <types:type name="weather_response_json" format="json">
+      <types:shape format="weave" example="examples/response_weather.json"><![CDATA[%dw 2.0
+
+type weather_response_json = {|
+  location: String, 
+  time: String, 
+  wind: String, 
+  visibility: String, 
+  "sky-conditions": String, 
+  temperature: Number {"typeId": "int"}, 
+  dew: String, 
+  humidity: Number {"typeId": "int"}, 
+  status: String
+|} {"example": "{\"location\":\"Melbourne\",\"time\":\"11 AM\",\"wind\":\"15 km per hour\",\"visibility\":\"10 km\",\"sky-conditions\":\"sunny\",\"temperature\":18,\"dew\":\"2 C\",\"humidity\":35,\"status\":\"normal\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="cities_output_json" format="json">
+      <types:shape format="weave" example="examples/response_js-2.json"><![CDATA[%dw 2.0
+
+type cities_output_json = Array<{|  Country: String,   City: String|}> {"example": "[{\"Country\":\"Australia\",\"City\":\"Archerfield Aerodrome\"},{\"Country\":\"Australia\",\"City\":\"Amberley Aerodrome\"},{\"Country\":\"Australia\",\"City\":\"Alice Springs Aerodrome\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#c08a222b-577f-437d-b82e-67cfe9f6a4f9">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="citiesResponseXML"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="cities_output_json"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#9853c4b4-833c-4a27-9f1a-dae5f74226d0">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="weather_incoming_xml"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="weather_response_json"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
