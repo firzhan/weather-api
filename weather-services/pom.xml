@@ -4,7 +4,7 @@
 
 	<groupId>com.mycompany</groupId>
 	<artifactId>weather-services</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>mule-application</packaging>
 
 	<name>weather-services</name>
@@ -26,7 +26,16 @@
 				<extensions>true</extensions>
 				<configuration>
 				</configuration>
+				
 			</plugin>
+			<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>3.2.0</version>
+    <configuration>
+        <finalName>myJar</finalName>                   
+    </configuration>
+</plugin>    
 		</plugins>
 	</build>
 
